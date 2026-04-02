@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stemmen Test</title>
+<style>
+body { font-family: sans-serif; padding: 16px; background: #f0f4f3; max-width: 500px; margin: 0 auto; }
+h2 { color: #1a7a6e; font-size: 20px; }
+h3 { color: #888; font-size: 11px; margin: 16px 0 6px; text-transform: uppercase; letter-spacing: 1px; }
+.stem { background: white; border-radius: 12px; padding: 12px; margin: 6px 0; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+.sn { font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+.zinnen { display: flex; flex-direction: column; gap: 6px; }
+button { background: #1a7a6e; color: white; border: none; border-radius: 8px; padding: 9px 12px; font-size: 13px; cursor: pointer; text-align: left; }
+button.stop { background: #c0392b; width: 100%; padding: 12px; font-size: 15px; margin: 10px 0; text-align: center; }
+#status { font-size: 13px; color: #444; margin: 8px 0; padding: 10px; background: white; border-radius: 8px; min-height: 20px; }
+</style>
+</head>
+<body>
+<h2>Hebrew Stemmen Test</h2>
+<div id="status">Kies een stem om te testen</div>
+<button class="stop" onclick="stopAudio()">&#9632; Stop</button>
+
+<h3>Mannelijke stemmen</h3>
+
+<div class="stem">
+<div class="sn">Asaf ♂</div>
+<div class="zinnen">
+  <button onclick="t('Asaf',1)">&#128266; שָׁלוֹם, מַה שְׁלוֹמְךָ — Shalom, hoe gaat het?</button>
+  <button onclick="t('Asaf',2)">&#128266; אֲנִי רוֹצֶה לִלְמֹד עִבְרִית — Ik wil Ivriet leren</button>
+  <button onclick="t('Asaf',3)">&#128266; יוֹם טוֹב, אֵיךְ קוֹרְאִים לְךָ — Goedendag, hoe heet jij?</button>
+  <button onclick="t('Asaf',4)">&#128266; אֲנִי לֹא מֵבִין — Ik begrijp het niet</button>
+  <button onclick="t('Asaf',5)">&#128266; תּוֹדָה רַבָּה, לְהִתְרָאוֹת — Dank je wel, tot ziens</button>
+</div>
+</div>
+
+<h3>Vrouwelijke stemmen</h3>
+
+<div class="stem">
+<div class="sn">Gill ♀</div>
+<div class="zinnen">
+  <button onclick="t('Gill',1)">&#128266; שָׁלוֹם, מַה שְׁלוֹמְךָ — Shalom, hoe gaat het?</button>
+  <button onclick="t('Gill',2)">&#128266; אֲנִי רוֹצָה לִלְמֹד עִבְרִית — Ik wil Ivriet leren</button>
+  <button onclick="t('Gill',3)">&#128266; יוֹם טוֹב, אֵיךְ קוֹרְאִים לָךְ — Goedendag, hoe heet jij?</button>
+  <button onclick="t('Gill',4)">&#128266; אֲנִי לֹא מְבִינָה — Ik begrijp het niet</button>
+  <button onclick="t('Gill',5)">&#128266; תּוֹדָה רַבָּה, לְהִתְרָאוֹת — Dank je wel, tot ziens</button>
+</div>
+</div>
+
+<div class="stem">
+<div class="sn">Ruti ♀</div>
+<div class="zinnen">
+  <button onclick="t('Ruti',1)">&#128266; שָׁלוֹם, מַה שְׁלוֹמְךָ — Shalom, hoe gaat het?</button>
+  <button onclick="t('Ruti',2)">&#128266; אֲנִי רוֹצָה לִלְמֹד עִבְרִית — Ik wil Ivriet leren</button>
+  <button onclick="t('Ruti',3)">&#128266; יוֹם טוֹב, אֵיךְ קוֹרְאִים לָךְ — Goedendag, hoe heet jij?</button>
+  <button onclick="t('Ruti',4)">&#128266; אֲנִי לֹא מְבִינָה — Ik begrijp het niet</button>
+  <button onclick="t('Ruti',5)">&#128266; תּוֹדָה רַבָּה, לְהִתְרָאוֹת — Dank je wel, tot ziens</button>
+</div>
+</div>
+
+<h3>Standaard stem</h3>
+<div class="stem">
+<div class="sn">Standaard VoiceRSS</div>
+<div class="zinnen">
+  <button onclick="t('',1)">&#128266; שָׁלוֹם, מַה שְׁלוֹמְךָ — Shalom, hoe gaat het?</button>
+  <button onclick="t('',2)">&#128266; אֲנִי רוֹצֶה לִלְמֹד עִבְרִית — Ik wil Ivriet leren</button>
+  <button onclick="t('',3)">&#128266; יוֹם טוֹב, אֵיךְ קוֹרְאִים לְךָ — Goedendag, hoe heet jij?</button>
+</div>
+</div>
+
+<h3>Snelheid (Asaf)</h3>
+<div class="stem">
+<div class="sn">Spreeksnelheid</div>
+<div class="zinnen">
+  <button onclick="ts(-5)">&#128266; Heel langzaam (-5)</button>
+  <button onclick="ts(-3)">&#128266; Langzaam (-3)</button>
+  <button onclick="ts(-1)">&#128266; Normaal (-1)</button>
+  <button onclick="ts(0)">&#128266; Snel (0)</button>
+</div>
+</div>
+
+<script>
+var KEY = 'd21275b8352447bd8a77d9a1d08a6c50';
+var huidig = null;
+
+var ZINNEN = {
+  1: '\u05E9\u05B8\u05DC\u05D5\u05B9\u05DD, \u05DE\u05B7\u05D4 \u05E9\u05B0\u05DC\u05D5\u05B9\u05DE\u05B0\u05DA\u05BE',
+  2: '\u05D0\u05B2\u05E0\u05B4\u05D9 \u05E8\u05D5\u05B9\u05E6\u05B6\u05D4 \u05DC\u05B4\u05DC\u05DE\u05B9\u05D3 \u05E2\u05B4\u05D1\u05E8\u05B4\u05D9\u05EA',
+  3: '\u05D9\u05D5\u05B9\u05DD \u05D8\u05D5\u05B9\u05D1, \u05D0\u05B5\u05D9\u05DA \u05E7\u05D5\u05B9\u05E8\u05D0\u05B4\u05D9\u05DD \u05DC\u05B0\u05DA\u05BE',
+  4: '\u05D0\u05B2\u05E0\u05B4\u05D9 \u05DC\u05B9\u05D0 \u05DE\u05B5\u05D1\u05B4\u05D9\u05DF',
+  5: '\u05EA\u05BC\u05D5\u05B9\u05D3\u05B8\u05D4 \u05E8\u05B7\u05D1\u05B8\u05BC\u05D4, \u05DC\u05B0\u05D4\u05B4\u05EA\u05E8\u05D0\u05D5\u05B9\u05EA'
+};
+
+function t(stem, zin) {
+  stopAudio();
+  var st = document.getElementById('status');
+  st.textContent = 'Laden...';
+  var tekst = ZINNEN[zin];
+  var url = 'https://api.voicerss.org/?key=' + KEY
+    + '&hl=he-il&c=MP3&r=-2'
+    + (stem ? '&v=' + stem : '')
+    + '&src=' + encodeURIComponent(tekst);
+  var a = new Audio(url);
+  huidig = a;
+  a.onplay = function() { st.textContent = 'Speelt: ' + (stem || 'standaard'); };
+  a.onended = function() { st.textContent = 'Klaar - ' + (stem || 'standaard'); huidig = null; };
+  a.onerror = function() { st.textContent = 'Fout - controleer internet'; huidig = null; };
+  a.play().catch(function(e) { st.textContent = 'Fout: ' + e.message; });
+}
+
+function ts(r) {
+  stopAudio();
+  var st = document.getElementById('status');
+  st.textContent = 'Laden snelheid ' + r + '...';
+  var url = 'https://api.voicerss.org/?key=' + KEY
+    + '&hl=he-il&c=MP3&v=Asaf&r=' + r
+    + '&src=' + encodeURIComponent(ZINNEN[1] + ' ' + ZINNEN[2]);
+  var a = new Audio(url);
+  huidig = a;
+  a.onplay = function() { st.textContent = 'Snelheid: ' + r; };
+  a.onended = function() { st.textContent = 'Klaar'; huidig = null; };
+  a.onerror = function() { st.textContent = 'Fout'; huidig = null; };
+  a.play().catch(function(e) { st.textContent = 'Fout: ' + e.message; });
+}
+
+function stopAudio() {
+  if (huidig) { try { huidig.pause(); huidig = null; } catch(e) {} }
+  document.getElementById('status').textContent = 'Gestopt';
+}
+</script>
+</body>
+</html>
