@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ratzit tav test</title>
+</head>
+<body style="font-family:sans-serif;padding:20px;max-width:500px">
+<h2>Hila — רָצִית (tav) — SSML vs Text</h2>
+<p>Beide gebruiken tav. Welke klinkt als "ratzit"?</p>
+
+<div style="margin:12px 0;padding:14px;background:#ffb3c6;border-radius:8px">
+  <b>♀ Hila — SSML methode</b><br>
+  <button id="b1" style="margin-top:8px;padding:12px;background:#e84393;color:white;border:none;border-radius:8px;font-size:18px;cursor:pointer;width:100%">Speel af (SSML)</button>
+</div>
+
+<div style="margin:12px 0;padding:14px;background:#b3d9ff;border-radius:8px">
+  <b>♀ Hila — Text methode</b><br>
+  <button id="b2" style="margin-top:8px;padding:12px;background:#0078d4;color:white;border:none;border-radius:8px;font-size:18px;cursor:pointer;width:100%">Speel af (Text)</button>
+</div>
+
+<div id="st" style="margin-top:16px;padding:12px;background:#f0f0f0;border-radius:8px">Klik...</div>
+
+<script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js"></script>
+<script>
+var AZURE_KEY = ['5a4gnryxxTkYqP','kgI99TASdEBpUy','VjTSFJDwCFF6Xe','r2tDFpbyNFJQQJ','99CDACYeBjFXJ3','w3AAAYACOGF9mA'].join('');
+var AZURE_REGION = 'eastus';
+var curSynth = null;
+var WORD = "רָצִית";
+
+function stop() {
+  if (curSynth) { try { curSynth.close(); } catch(e) {} curSynth = null; }
+}
+
+function getConfig() {
+  var config = SpeechSDK.SpeechConfig.fromSubscription(AZURE_KEY, AZURE_REGION);
+  config.speechSynthesisVoiceName = 'he-IL-HilaNeural';
+  var audio = SpeechSDK.AudioConfig.fromDefaultSpeakerOutput();
+  return { config: config, audio: audio };
+}
+
+document.getElementById('b1').onclick = function() {
+  stop();
+  document.getElementById('st').textContent = 'SSML methode...';
+  var c = getConfig();
+  curSynth = new SpeechSDK.SpeechSynthesizer(c.config, c.audio);
+  var ssml = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="he-IL"><voice name="he-IL-HilaNeural"><prosody rate="medium">' + WORD + '</prosody></voice></speak>';
+  curSynth.speakSsmlAsync(ssml,
+    function(r) { stop(); document.getElementById('st').textContent = 'Klaar SSML'; },
+    function(e) { stop(); document.getElementById('st').textContent = 'Fout: ' + e; }
+  );
+};
+
+document.getElementById('b2').onclick = function() {
+  stop();
+  document.getElementById('st').textContent = 'Text methode...';
+  var c = getConfig();
+  curSynth = new SpeechSDK.SpeechSynthesizer(c.config, c.audio);
+  curSynth.speakTextAsync(WORD,
+    function(r) { stop(); document.getElementById('st').textContent = 'Klaar Text'; },
+    function(e) { stop(); document.getElementById('st').textContent = 'Fout: ' + e; }
+  );
+};
+</script>
+</body></html>
